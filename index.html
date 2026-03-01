@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forensic Quantum Consultants & Limited</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ============================================================
+   CSS VARIABLES & RESET
+   ============================================================ */
+:root {
+  --blue-900: #0B1F3A;
+  --blue-800: #122947;
+  --blue-700: #1A3A5C;
+  --blue-600: #1E4D7B;
+  --blue-500: #2563A8;
+  --blue-400: #3B82C4;
+  --blue-100: #EBF3FC;
+  --red-600: #C0392B;
+  --red-500: #E74C3C;
+  --red-400: #EC6657;
+  --grey-900: #1A1A2E;
+  --grey-800: #2C2C3E;
+  --grey-700: #4A4A5A;
+  --grey-600: #6B6B7B;
+  --grey-400: #9CA3AF;
+  --grey-200: #E5E7EB;
+  --grey-100: #F3F4F6;
+  --grey-50: #F9FAFB;
+  --white: #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.18);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --max-width: 1200px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); color: var(--grey-800); background: var(--white); line-height: 1.7; overflow-x: hidden; }
+img { max-width: 100%; height: auto; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { cursor: pointer; font-family: var(--font-body); border: none; }
+
+/* ============================================================
+   PAGE SYSTEM — show/hide pages
+   ============================================================ */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 700; line-height: 1.25; color: var(--blue-900); }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
+h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
+h4 { font-size: 1.15rem; }
+p { color: var(--grey-700); }
+.section-label {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--red-500); margin-bottom: 0.5rem; display: block;
+}
+.section-title { margin-bottom: 1rem; }
+.section-subtitle { color: var(--grey-600); font-size: 1.05rem; max-width: 600px; }
+.text-center { text-align: center; }
+.text-center .section-subtitle { margin: 0 auto; }
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+.section { padding: 90px 0; }
+.section-alt { background: var(--grey-50); }
+.section-dark { background: var(--blue-900); color: var(--white); }
+.section-dark h2, .section-dark h3, .section-dark h4 { color: var(--white); }
+.section-dark p { color: rgba(255,255,255,0.75); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; align-items: center; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.gap-16 { gap: 16px; }
+.gap-24 { gap: 24px; }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-40 { margin-top: 40px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-40 { margin-bottom: 40px; }
+.mb-56 { margin-bottom: 56px; }
+.divider { width: 56px; height: 3px; background: var(--red-500); border-radius: 2px; margin-top: 16px; }
+.divider-center { margin: 16px auto 0; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 28px; border-radius: var(--radius-sm);
+  font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em;
+  transition: var(--transition); white-space: nowrap;
+}
+.btn-primary {
+  background: var(--blue-600); color: var(--white);
+  box-shadow: 0 4px 14px rgba(30,77,123,0.35);
+}
+.btn-primary:hover { background: var(--blue-700); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,77,123,0.45); }
+.btn-outline {
+  background: transparent; color: var(--blue-600);
+  border: 2px solid var(--blue-600);
+}
+.btn-outline:hover { background: var(--blue-600); color: var(--white); transform: translateY(-2px); }
+.btn-white {
+  background: var(--white); color: var(--blue-700);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.btn-white:hover { background: var(--grey-100); transform: translateY(-2px); }
+.btn-red {
+  background: var(--red-600); color: var(--white);
+  box-shadow: 0 4px 14px rgba(192,57,43,0.35);
+}
+.btn-red:hover { background: #a93226; transform: translateY(-2px); }
+.btn-ghost { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.5); }
+.btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+
+/* ============================================================
+   HEADER & NAVIGATION
+   ============================================================ */
+#site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(11,31,58,0.97); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: var(--transition);
+}
+#site-header.scrolled {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+}
+.header-inner {
+  max-width: var(--max-width); margin: 0 auto; padding: 0 24px;
+  height: 72px; display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+}
+.logo-mark {
+  width: 42px; height: 42px; background: linear-gradient(135deg, var(--blue-500), var(--blue-400));
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700; color: var(--white); font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(37,99,168,0.4);
+  flex-shrink: 0;
+}
+.logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+.logo-name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--white); letter-spacing: 0.02em; }
+.logo-tagline { font-size: 0.65rem; color: rgba(255,255,255,0.55); letter-spacing: 0.12em; text-transform: uppercase; }
+.main-nav { display: flex; align-items: center; gap: 4px; }
+.nav-item { position: relative; }
+.nav-link {
+  padding: 8px 14px; color: rgba(255,255,255,0.82); font-size: 0.875rem; font-weight: 500;
+  letter-spacing: 0.02em; border-radius: var(--radius-sm); transition: var(--transition);
+  cursor: pointer; display: block; white-space: nowrap;
+}
+.nav-link:hover, .nav-link.active { color: var(--white); background: rgba(255,255,255,0.1); }
+.nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.dropdown {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: var(--white); border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl); min-width: 220px;
+  opacity: 0; visibility: hidden; transform: translateY(-8px);
+  transition: var(--transition); z-index: 200;
+  border: 1px solid var(--grey-200); overflow: hidden;
+}
+.dropdown a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 18px; color: var(--grey-800); font-size: 0.875rem; font-weight: 500;
+  transition: var(--transition); border-bottom: 1px solid var(--grey-100);
+}
+.dropdown a:last-child { border-bottom: none; }
+.dropdown a:hover { background: var(--blue-100); color: var(--blue-700); padding-left: 24px; }
+.dropdown a i { width: 18px; color: var(--blue-500); font-size: 0.85rem; }
+.header-cta { margin-left: 16px; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; padding: 8px;
+  background: transparent; border: none; cursor: pointer;
+}
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Mobile Nav */
+.mobile-nav-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 900; opacity: 0; visibility: hidden; transition: var(--transition);
+}
+.mobile-nav-overlay.open { opacity: 1; visibility: visible; }
+.mobile-nav {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 300px;
+  background: var(--blue-900); z-index: 950; transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  overflow-y: auto; padding: 24px;
+}
+.mobile-nav.open { transform: translateX(0); }
+.mobile-nav-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.mobile-nav-close {
+  background: rgba(255,255,255,0.1); border: none; color: var(--white);
+  width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; cursor: pointer; transition: var(--transition);
+}
+.mobile-nav-close:hover { background: rgba(255,255,255,0.2); }
+.mobile-nav-links a {
+  display: block; padding: 13px 0; color: rgba(255,255,255,0.85); font-size: 0.95rem;
+  font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.08); transition: var(--transition);
+  cursor: pointer;
+}
+.mobile-nav-links a:hover { color: var(--white); padding-left: 8px; }
+.mobile-sub {
+  padding-left: 16px; background: rgba(255,255,255,0.05); border-radius: var(--radius-sm); margin: 4px 0;
+}
+.mobile-sub a { font-size: 0.875rem; color: rgba(255,255,255,0.65); border-bottom-color: rgba(255,255,255,0.05); }
+
+/* ============================================================
+   PAGE HERO HEADER (Interior Pages)
+   ============================================================ */
+.page-hero {
+  padding: 140px 0 70px;
+  background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 60%, var(--blue-600) 100%);
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&q=80') center/cover no-repeat;
+  opacity: 0.07;
+}
+.page-hero-content { position: relative; z-index: 1; }
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 16px; flex-wrap: wrap;
+}
+.breadcrumb span { cursor: pointer; transition: var(--transition); }
+.breadcrumb span:hover { color: var(--white); }
+.breadcrumb .separator { color: rgba(255,255,255,0.35); }
+.breadcrumb .current { color: rgba(255,255,255,0.85); }
+.page-hero h1 { color: var(--white); margin-bottom: 12px; }
+.page-hero p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 600px; }
+
+/* ============================================================
+   HERO SECTION (Homepage)
+   ============================================================ */
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center;
+  background: var(--blue-900); overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1800&q=80') center/cover no-repeat;
+  opacity: 0.12;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(11,31,58,0.98) 0%, rgba(26,58,92,0.92) 50%, rgba(30,77,123,0.85) 100%);
+}
+.hero-shapes {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.hero-shapes::before {
+  content: ''; position: absolute; right: -100px; top: -100px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(37,99,168,0.2) 0%, transparent 70%);
+}
+.hero-shapes::after {
+  content: ''; position: absolute; left: -50px; bottom: -50px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(192,57,43,0.1) 0%, transparent 70%);
+}
+.hero-content {
+  position: relative; z-index: 2; max-width: var(--max-width);
+  margin: 0 auto; padding: 140px 24px 100px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.hero-text { }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; color: rgba(255,255,255,0.75);
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
+  margin-bottom: 24px;
+}
+.hero-badge i { color: var(--red-400); }
+.hero-title { color: var(--white); margin-bottom: 24px; }
+.hero-title span { color: var(--red-400); }
+.hero-desc { color: rgba(255,255,255,0.72); font-size: 1.1rem; margin-bottom: 40px; max-width: 520px; line-height: 1.8; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: rgba(255,255,255,0.1); border-radius: var(--radius-md); overflow: hidden;
+  margin-top: 56px;
+}
+.hero-stat {
+  background: rgba(11,31,58,0.6); padding: 24px 20px; text-align: center;
+  backdrop-filter: blur(8px);
+}
+.hero-stat-number { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; color: var(--white); display: block; line-height: 1; }
+.hero-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px; display: block; }
+.hero-visual {
+  position: relative;
+}
+.hero-card {
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-xl); padding: 32px; backdrop-filter: blur(12px);
+}
+.hero-card-title { color: var(--white); font-size: 1.15rem; font-family: var(--font-display); margin-bottom: 20px; font-weight: 700; }
+.hero-service-list { display: flex; flex-direction: column; gap: 12px; }
+.hero-service-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; background: rgba(255,255,255,0.06); border-radius: var(--radius-md);
+  transition: var(--transition); cursor: pointer;
+}
+.hero-service-item:hover { background: rgba(255,255,255,0.12); transform: translateX(4px); }
+.hero-service-item i { color: var(--blue-400); width: 20px; text-align: center; }
+.hero-service-item span { color: rgba(255,255,255,0.85); font-size: 0.9rem; font-weight: 500; }
+.hero-service-item .arrow { margin-left: auto; color: rgba(255,255,255,0.35); font-size: 0.75rem; }
+
+/* ============================================================
+   SERVICES OVERVIEW (Home)
+   ============================================================ */
+.service-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  padding: 32px; box-shadow: var(--shadow-md);
+  border: 1px solid var(--grey-200); transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.service-card::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--blue-500); transform: scaleX(0); transition: var(--transition); transform-origin: left;
+}
+.service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
+.service-card:hover::before { transform: scaleX(1); }
+.service-icon {
+  width: 56px; height: 56px; background: var(--blue-100);
+  border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: var(--blue-600); margin-bottom: 20px; transition: var(--transition);
+}
+.service-card:hover .service-icon { background: var(--blue-600); color: var(--white); }
+.service-card h3 { margin-bottom: 12px; font-size: 1.2rem; }
+.service-card p { font-size: 0.9rem; color: var(--grey-600); line-height: 1.65; margin-bottom: 20px; }
+.service-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--blue-600); font-size: 0.875rem; font-weight: 600;
+  transition: var(--transition);
+}
+.service-link:hover { gap: 10px; color: var(--blue-700); }
+
+/* ============================================================
+   ABOUT TEASER (Home)
+   ============================================================ */
+.about-teaser-img {
+  border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: var(--shadow-xl); position: relative;
+}
+.about-teaser-img img { width: 100%; height: 480px; object-fit: cover; }
+.about-teaser-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(11,31,58,0.4));
+  border-radius: var(--radius-xl);
+}
+.about-teaser-badge {
+  position: absolute; bottom: 24px; left: 24px;
+  background: var(--white); border-radius: var(--radius-md); padding: 14px 20px;
+  box-shadow: var(--shadow-lg); z-index: 2;
+  display: flex; align-items: center; gap: 12px;
+}
+.about-teaser-badge i { color: var(--blue-500); font-size: 1.5rem; }
+.about-teaser-badge strong { display: block; color: var(--blue-900); font-size: 1.1rem; }
+.about-teaser-badge span { font-size: 0.75rem; color: var(--grey-600); }
+
+/* ============================================================
+   CORE VALUES (Home)
+   ============================================================ */
+.corevalues{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:20px;
+}
+.value-card {
+  text-align: center; padding: 32px 24px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg); transition: var(--transition);
+}
+.value-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+.value-icon {
+  width: 64px; height: 64px; margin: 0 auto 20px;
+  background: rgba(37,99,168,0.2); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: var(--blue-400); transition: var(--transition);
+}
+.value-card:hover .value-icon { background: var(--blue-600); color: var(--white); }
+.value-card h4 { color: var(--white); margin-bottom: 10px; font-size: 1.05rem; }
+.value-card p { font-size: 0.875rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+.project-card {
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-md); transition: var(--transition);
+  background: var(--white); border: 1px solid var(--grey-200);
+}
+.project-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
+.project-card-img {
+  position: relative; height: 220px; overflow: hidden;
+}
+.project-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.project-card:hover .project-card-img img { transform: scale(1.06); }
+.project-tag {
+  position: absolute; top: 14px; left: 14px;
+  background: var(--blue-600); color: var(--white);
+  padding: 4px 12px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.project-card-body { padding: 24px; }
+.project-meta { display: flex; gap: 16px; font-size: 0.78rem; color: var(--grey-500); margin-bottom: 10px; }
+.project-meta i { color: var(--blue-400); margin-right: 4px; }
+.project-card-body h3 { margin-bottom: 8px; font-size: 1.1rem; }
+.project-card-body p { font-size: 0.875rem; color: var(--grey-600); margin-bottom: 18px; }
+
+/* ============================================================
+   LEADERSHIP
+   ============================================================ */
+.leadership-card {
+  background: var(--white); border-radius: var(--radius-xl);
+  padding: 48px; box-shadow: var(--shadow-lg);
+  display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: start;
+}
+.leader-img {
+  width: 200px; height: 200px; border-radius: var(--radius-xl); overflow: hidden;
+  border: 4px solid var(--blue-100); flex-shrink: 0;
+}
+.leader-img img { width: 100%; height: 100%; object-fit: cover; }
+.leader-role { color: var(--red-500); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+.leader-name { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 4px; }
+.leader-creds { color: var(--grey-600); font-size: 0.875rem; margin-bottom: 20px; }
+.leader-bio { color: var(--grey-700); line-height: 1.8; font-size: 0.95rem; }
+
+/* ============================================================
+   WHY CHOOSE US
+   ============================================================ */
+.benefit-item {
+  display: flex; gap: 20px; align-items: flex-start; padding: 24px;
+  background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+  border: 1px solid var(--grey-200); transition: var(--transition);
+}
+.benefit-item:hover { box-shadow: var(--shadow-md); transform: translateX(4px); border-color: var(--blue-100); }
+.benefit-icon {
+  width: 48px; height: 48px; background: var(--blue-100); border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--blue-600); flex-shrink: 0; transition: var(--transition);
+}
+.benefit-item:hover .benefit-icon { background: var(--blue-600); color: var(--white); }
+.benefit-item h4 { margin-bottom: 6px; font-size: 1.0rem; }
+.benefit-item p { font-size: 0.875rem; color: var(--grey-600); }
+
+/* ============================================================
+   CONTACT PREVIEW (Home)
+   ============================================================ */
+.contact-info-item {
+  display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px;
+}
+.contact-info-icon {
+  width: 44px; height: 44px; background: var(--blue-100); border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blue-600); font-size: 1rem; flex-shrink: 0;
+}
+.contact-info-label { font-size: 0.72rem; color: var(--grey-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.contact-info-value { color: var(--grey-800); font-weight: 500; }
+.contact-mini-form { background: var(--grey-50); border-radius: var(--radius-lg); padding: 32px; }
+.contact-mini-form h3 { margin-bottom: 20px; font-size: 1.2rem; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--grey-700); margin-bottom: 6px; letter-spacing: 0.04em; }
+.form-control {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--grey-200); border-radius: var(--radius-sm);
+  font-size: 0.9rem; font-family: var(--font-body); color: var(--grey-800);
+  background: var(--white); transition: var(--transition); outline: none;
+}
+.form-control:focus { border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(37,99,168,0.12); }
+textarea.form-control { resize: vertical; min-height: 100px; }
+select.form-control { cursor: pointer; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--grey-900); color: rgba(255,255,255,0.75);
+  padding: 70px 0 0;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 48px; padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+footer h4 { color: var(--white); font-size: 1rem; margin-bottom: 20px; font-family: var(--font-display); }
+footer p { font-size: 0.875rem; line-height: 1.8; }
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 0.875rem; color: rgba(255,255,255,0.65); transition: var(--transition); cursor: pointer;
+}
+.footer-links a:hover { color: var(--white); padding-left: 6px; }
+.footer-social { display: flex; gap: 10px; margin-top: 20px; }
+.social-icon {
+  width: 38px; height: 38px; background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.65); font-size: 0.9rem; transition: var(--transition); cursor: pointer;
+}
+.social-icon:hover { background: var(--blue-600); color: var(--white); transform: translateY(-2px); }
+.footer-contact-item { display: flex; gap: 10px; margin-bottom: 14px; font-size: 0.875rem; }
+.footer-contact-item i { color: var(--blue-400); width: 16px; margin-top: 3px; flex-shrink: 0; }
+.footer-bottom {
+  padding: 20px 0; display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.8rem; color: rgba(255,255,255,0.4); flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom a { color: rgba(255,255,255,0.4); transition: var(--transition); }
+.footer-bottom a:hover { color: var(--white); }
+
+/* ============================================================
+   SERVICES PAGE — Detailed
+   ============================================================ */
+.services-nav-sticky {
+  background: var(--white); border-bottom: 1px solid var(--grey-200);
+  padding: 16px 0; position: sticky; top: 72px; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.services-nav-inner {
+  max-width: var(--max-width); margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+}
+.services-nav-inner::-webkit-scrollbar { display: none; }
+.service-nav-btn {
+  padding: 7px 18px; border-radius: 50px; font-size: 0.82rem; font-weight: 600;
+  background: var(--grey-100); color: var(--grey-700); border: none; white-space: nowrap;
+  transition: var(--transition); cursor: pointer;
+}
+.service-nav-btn:hover, .service-nav-btn.active { background: var(--blue-600); color: var(--white); }
+.service-detail-section { padding: 70px 0; border-bottom: 1px solid var(--grey-200); }
+.service-detail-section:last-of-type { border-bottom: none; }
+.service-detail-section:nth-child(even) { background: var(--grey-50); }
+.service-detail-header {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+}
+.service-detail-icon {
+  width: 64px; height: 64px; background: var(--blue-100);
+  border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: var(--blue-600); flex-shrink: 0;
+}
+.service-benefits { margin-top: 28px; }
+.service-benefits h4 { margin-bottom: 14px; color: var(--blue-900); }
+.benefit-list { display: flex; flex-direction: column; gap: 10px; }
+.benefit-list-item {
+  display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--grey-700);
+}
+.benefit-list-item i { color: var(--blue-500); margin-top: 2px; flex-shrink: 0; }
+.process-step {
+  text-align: center; padding: 32px 24px;
+}
+.step-number {
+  width: 64px; height: 64px; background: var(--blue-600); color: var(--white);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+  margin: 0 auto 20px; box-shadow: 0 6px 20px rgba(30,77,123,0.35);
+}
+.process-step h4 { margin-bottom: 10px; }
+.process-step p { font-size: 0.875rem; color: var(--grey-600); }
+
+/* ============================================================
+   PROJECTS PAGE
+   ============================================================ */
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+.filter-btn {
+  padding: 8px 22px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+  background: var(--grey-100); color: var(--grey-700); border: 2px solid transparent;
+  transition: var(--transition); cursor: pointer;
+}
+.filter-btn:hover { background: var(--blue-100); color: var(--blue-700); }
+.filter-btn.active { background: var(--blue-600); color: var(--white); border-color: var(--blue-600); }
+.projects-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+}
+.project-item { transition: var(--transition); }
+.project-item.hidden { display: none; }
+.stats-bar {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  background: var(--blue-700); border-radius: var(--radius-lg); overflow: hidden;
+}
+.stat-item {
+  background: var(--blue-800); padding: 40px 24px; text-align: center;
+  transition: var(--transition);
+}
+.stat-item:hover { background: var(--blue-700); }
+.stat-number {
+  font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--white);
+  display: block; line-height: 1;
+}
+.stat-plus { color: var(--red-400); }
+.stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-top: 8px; display: block; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  z-index: 2000; display: flex; align-items: center; justify-content: center;
+  padding: 24px; opacity: 0; visibility: hidden; transition: var(--transition);
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+.modal {
+  background: var(--white); border-radius: var(--radius-xl);
+  max-width: 720px; width: 100%; max-height: 85vh; overflow-y: auto;
+  box-shadow: var(--shadow-xl); transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.modal-overlay.open .modal { transform: scale(1); }
+.modal-img { height: 280px; overflow: hidden; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+.modal-img img { width: 100%; height: 100%; object-fit: cover; }
+.modal-body { padding: 40px; }
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.modal-close {
+  width: 36px; height: 36px; background: var(--grey-100); border: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--grey-600); cursor: pointer; transition: var(--transition); flex-shrink: 0;
+}
+.modal-close:hover { background: var(--grey-200); color: var(--grey-900); }
+.modal-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; font-size: 0.82rem; color: var(--grey-500); }
+.modal-specs { background: var(--grey-50); border-radius: var(--radius-md); padding: 20px; margin-top: 20px; }
+.modal-specs h4 { margin-bottom: 12px; font-size: 0.95rem; }
+.modal-specs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.spec-item { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 6px 0; border-bottom: 1px solid var(--grey-200); }
+.spec-label { color: var(--grey-600); }
+.spec-value { font-weight: 600; color: var(--grey-800); }
+
+/* ============================================================
+   ABOUT PAGE
+   ============================================================ */
+.mission-card {
+  background: var(--white); border-radius: var(--radius-lg); padding: 36px;
+  box-shadow: var(--shadow-md); border-top: 4px solid var(--blue-600);
+  text-align: center; transition: var(--transition);
+}
+.mission-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.mission-icon {
+  width: 64px; height: 64px; background: var(--blue-100); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: var(--blue-600); margin: 0 auto 20px;
+}
+.mission-card h3 { margin-bottom: 14px; }
+.mission-card p { font-size: 0.9rem; color: var(--grey-600); line-height: 1.7; }
+
+/* ============================================================
+   CONTACT PAGE
+   ============================================================ */
+.contact-card {
+  background: var(--white); border-radius: var(--radius-lg); padding: 32px;
+  box-shadow: var(--shadow-md); text-align: center; transition: var(--transition);
+  border: 1px solid var(--grey-200);
+}
+.contact-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--blue-200); }
+.contact-card-icon {
+  width: 64px; height: 64px; background: var(--blue-600); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: var(--white); margin: 0 auto 20px;
+  box-shadow: 0 6px 20px rgba(30,77,123,0.35);
+}
+.contact-card h3 { margin-bottom: 10px; font-size: 1.05rem; }
+.contact-card p { font-size: 0.875rem; color: var(--grey-600); line-height: 1.7; }
+.social-links-row { display: flex; gap: 10px; justify-content: center; margin-top: 16px; }
+.map-container { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); height: 400px; }
+.map-container iframe { width: 100%; height: 100%; border: none; }
+.contact-full-form {
+  background: var(--white); border-radius: var(--radius-xl); padding: 48px;
+  box-shadow: var(--shadow-lg);
+}
+.contact-full-form h2 { margin-bottom: 8px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.accordion-item { border: 1px solid var(--grey-200); border-radius: var(--radius-md); margin-bottom: 12px; overflow: hidden; }
+.accordion-header {
+  width: 100%; padding: 18px 20px; background: var(--white); border: none;
+  display: flex; justify-content: space-between; align-items: center;
+  cursor: pointer; text-align: left; transition: var(--transition); font-family: var(--font-body);
+}
+.accordion-header:hover { background: var(--grey-50); }
+.accordion-header h4 { font-size: 0.95rem; color: var(--grey-800); font-weight: 600; }
+.accordion-header.open h4 { color: var(--blue-700); }
+.accordion-icon { width: 24px; height: 24px; background: var(--grey-100); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--grey-600); flex-shrink: 0; transition: var(--transition); }
+.accordion-header.open .accordion-icon { background: var(--blue-600); color: var(--white); transform: rotate(45deg); }
+.accordion-body { display: none; padding: 0 20px 20px; font-size: 0.9rem; color: var(--grey-600); line-height: 1.75; }
+.accordion-body.open { display: block; }
+
+/* ============================================================
+   CTA SECTION
+   ============================================================ */
+.cta-section {
+  background: linear-gradient(135deg, var(--blue-900), var(--blue-700));
+  padding: 90px 0; text-align: center; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=1600&q=80') center/cover;
+  opacity: 0.05;
+}
+.cta-section .container { position: relative; z-index: 1; }
+.cta-section h2 { color: var(--white); margin-bottom: 16px; }
+.cta-section p { color: rgba(255,255,255,0.75); font-size: 1.05rem; max-width: 560px; margin: 0 auto 36px; }
+.cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   ============================================================ */
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .hero-stats { max-width: 500px; }
+  .leadership-card { grid-template-columns: 1fr; text-align: center; }
+  .leader-img { margin: 0 auto; }
+  .corevalues{
+    grid-template-columns:repeat(1,5fr);
+    gap:20px;
+  }
+}
+@media (max-width: 768px) {
+  .main-nav, .header-cta { display: none; }
+  .hamburger { display: flex; }
+  .section { padding: 64px 0; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: 1fr; }
+  .hero-content { padding: 120px 20px 80px; }
+  .hero-stats { grid-template-columns: 1fr; max-width: 280px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .stats-bar { grid-template-columns: 1fr; }
+  .contact-full-form { padding: 28px 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .modal-body { padding: 24px; }
+  .modal-specs-grid { grid-template-columns: 1fr; }
+  .corevalues{
+    grid-template-columns:repeat(1,5fr);
+    gap:20px;
+  }
+}
+@media (max-width: 480px) {
+  :root { --max-width: 100%; }
+  .hero-title { font-size: 1.8rem; }
+  .btn { padding: 11px 20px; font-size: 0.85rem; }
+  .corevalues{
+    grid-template-columns:repeat(1,5fr);
+    gap:20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SITE HEADER
+     ============================================================ -->
+<header id="site-header">
+  <div class="header-inner">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-mark">FQ</div>
+      <div class="logo-text">
+        <span class="logo-name">Forensic Quantum</span>
+        <span class="logo-tagline">Consultants &amp; Limited</span>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <div class="nav-item">
+        <span class="nav-link" onclick="showPage('home')" data-page="home">Home</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-link" onclick="showPage('services')" data-page="services">Services <i class="fa fa-chevron-down" style="font-size:0.65rem;margin-left:4px;"></i></span>
+        <div class="dropdown">
+          <a onclick="showPage('services'); scrollToService('adjudication')"><i class="fa fa-gavel"></i>Adjudication</a>
+          <a onclick="showPage('services'); scrollToService('arbitration')"><i class="fa fa-scale-balanced"></i>Arbitration</a>
+          <a onclick="showPage('services'); scrollToService('mediation')"><i class="fa fa-handshake"></i>Mediation</a>
+          <a onclick="showPage('services'); scrollToService('dispute-boards')"><i class="fa fa-users"></i>Dispute Boards</a>
+          <a onclick="showPage('services'); scrollToService('expert-determination')"><i class="fa fa-magnifying-glass"></i>Expert Determination</a>
+          <a onclick="showPage('services'); scrollToService('expert-services')"><i class="fa fa-briefcase"></i>Expert Services</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <span class="nav-link" onclick="showPage('projects')" data-page="projects">Projects</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-link" onclick="showPage('about')" data-page="about">About</span>
+      </div>
+      <div class="nav-item">
+        <span class="nav-link" onclick="showPage('contact')" data-page="contact">Contact</span>
+      </div>
+    </nav>
+    <div class="header-cta">
+      <button class="btn btn-primary" onclick="showPage('contact')">Request Consultation</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav-overlay" id="mobileOverlay" onclick="closeMobileNav()"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <div class="logo">
+      <div class="logo-mark">RA</div>
+      <div class="logo-text">
+        <span class="logo-name">Resolve Advisory</span>
+      </div>
+    </div>
+    <button class="mobile-nav-close" onclick="closeMobileNav()"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="mobile-nav-links">
+    <a onclick="showPage('home'); closeMobileNav()">Home</a>
+    <a onclick="showPage('services'); closeMobileNav()">Services</a>
+    <div class="mobile-sub">
+      <a onclick="showPage('services'); scrollToService('adjudication'); closeMobileNav()">Adjudication</a>
+      <a onclick="showPage('services'); scrollToService('arbitration'); closeMobileNav()">Arbitration</a>
+      <a onclick="showPage('services'); scrollToService('mediation'); closeMobileNav()">Mediation</a>
+      <a onclick="showPage('services'); scrollToService('dispute-boards'); closeMobileNav()">Dispute Boards</a>
+      <a onclick="showPage('services'); scrollToService('expert-determination'); closeMobileNav()">Expert Determination</a>
+      <a onclick="showPage('services'); scrollToService('expert-services'); closeMobileNav()">Expert Services</a>
+    </div>
+    <a onclick="showPage('projects'); closeMobileNav()">Projects</a>
+    <a onclick="showPage('about'); closeMobileNav()">About</a>
+    <a onclick="showPage('contact'); closeMobileNav()">Contact</a>
+  </div>
+  <div style="margin-top:32px;">
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="showPage('contact'); closeMobileNav()">Request Consultation</button>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HOME PAGE
+     ============================================================ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-shapes"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge"><i class="fa fa-award"></i>Trusted Dispute Resolution Specialists</div>
+        <h1 class="hero-title">Resolving Complex Disputes with <span>Authority &amp; Precision</span></h1>
+        <p class="hero-desc">We provide independent, expert-led dispute resolution and advisory services across construction, commercial, infrastructure, and complex multi-party disputes.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="showPage('services')"><i class="fa fa-arrow-right"></i>Explore Services</button>
+          <button class="btn btn-ghost" onclick="showPage('contact')">Request Consultation</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="hero-stat-number">50<span style="color:var(--red-400)">+</span></span><span class="hero-stat-label">Cases Resolved</span></div>
+          <div class="hero-stat"><span class="hero-stat-number">20<span style="color:var(--red-400)">+</span></span><span class="hero-stat-label">Years Experience</span></div>
+          <div class="hero-stat"><span class="hero-stat-number">95<span style="color:var(--red-400)">%</span></span><span class="hero-stat-label">Resolution Rate</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <p class="hero-card-title">Our Services</p>
+          <div class="hero-service-list">
+            <div class="hero-service-item" onclick="showPage('services'); scrollToService('adjudication')">
+              <i class="fa fa-gavel"></i><span>Adjudication</span><i class="fa fa-arrow-right arrow"></i>
+            </div>
+            <div class="hero-service-item" onclick="showPage('services'); scrollToService('arbitration')">
+              <i class="fa fa-scale-balanced"></i><span>Arbitration</span><i class="fa fa-arrow-right arrow"></i>
+            </div>
+            <div class="hero-service-item" onclick="showPage('services'); scrollToService('mediation')">
+              <i class="fa fa-handshake"></i><span>Mediation</span><i class="fa fa-arrow-right arrow"></i>
+            </div>
+            <div class="hero-service-item" onclick="showPage('services'); scrollToService('dispute-boards')">
+              <i class="fa fa-users"></i><span>Dispute Boards</span><i class="fa fa-arrow-right arrow"></i>
+            </div>
+            <div class="hero-service-item" onclick="showPage('services'); scrollToService('expert-determination')">
+              <i class="fa fa-magnifying-glass"></i><span>Expert Determination</span><i class="fa fa-arrow-right arrow"></i>
+            </div>
+            <div class="hero-service-item" onclick="showPage('services'); scrollToService('expert-services')">
+              <i class="fa fa-briefcase"></i><span>Expert Services</span><i class="fa fa-arrow-right arrow"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Overview -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-56 fade-in">
+        <span class="section-label">What We Do</span>
+        <h2 class="section-title">Expert Dispute Resolution Services</h2>
+        <div class="divider divider-center"></div>
+        <p class="section-subtitle mt-16">From formal arbitration to expert determination, we offer a full spectrum of impartial dispute resolution services tailored to your sector and complexity.</p>
+      </div>
+      <div class="grid-3">
+        <div class="service-card fade-in">
+          <div class="service-icon"><i class="fa fa-gavel"></i></div>
+          <h3>Adjudication</h3>
+          <p>Fast-track dispute resolution binding both parties, delivering timely decisions in construction and engineering disputes under statutory frameworks.</p>
+          <a class="service-link" onclick="showPage('services'); scrollToService('adjudication')">Learn More <i class="fa fa-arrow-right"></i></a>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon"><i class="fa fa-scale-balanced"></i></div>
+          <h3>Arbitration</h3>
+          <p>Confidential, private resolution with legally binding awards. Our arbitrators bring deep technical and legal acumen to complex multi-party disputes.</p>
+          <a class="service-link" onclick="showPage('services'); scrollToService('arbitration')">Learn More <i class="fa fa-arrow-right"></i></a>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon"><i class="fa fa-handshake"></i></div>
+          <h3>Mediation</h3>
+          <p>A collaborative, interest-based process guided by our skilled mediators to facilitate negotiated settlement and preserve commercial relationships.</p>
+          <a class="service-link" onclick="showPage('services'); scrollToService('mediation')">Learn More <i class="fa fa-arrow-right"></i></a>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon"><i class="fa fa-users"></i></div>
+          <h3>Dispute Boards</h3>
+          <p>Standing panels embedded within long-term projects to provide real-time advisory decisions and prevent disputes from escalating.</p>
+          <a class="service-link" onclick="showPage('services'); scrollToService('dispute-boards')">Learn More <i class="fa fa-arrow-right"></i></a>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon"><i class="fa fa-magnifying-glass"></i></div>
+          <h3>Expert Determination</h3>
+          <p>Independent evaluation of technical or quantum issues by a domain expert whose binding determination resolves the specific dispute efficiently.</p>
+          <a class="service-link" onclick="showPage('services'); scrollToService('expert-determination')">Learn More <i class="fa fa-arrow-right"></i></a>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon"><i class="fa fa-briefcase"></i></div>
+          <h3>Expert Services</h3>
+          <p>Technical advisory, quantum analysis, delay analysis, and expert witness services supporting parties and their legal counsel.</p>
+          <a class="service-link" onclick="showPage('services'); scrollToService('expert-services')">Learn More <i class="fa fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Teaser -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="grid-2" style="gap:60px;">
+        <div class="about-teaser-img fade-in">
+          <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=800&q=80" alt="Resolve Advisory Office">
+          <div class="about-teaser-badge">
+            <i class="fa fa-shield-halved"></i>
+            <div><strong>Trusted Since 2025</strong><span>Independent &amp; Impartial</span></div>
+          </div>
+        </div>
+        <div class="fade-in">
+          <span class="section-label">About Us</span>
+          <h2 class="section-title">Zambia's Premier Dispute Resolution Practice</h2>
+          <div class="divider"></div>
+          <p style="margin-top:20px;margin-bottom:16px;">Forensic Quantum Consultants Limited is a specialist dispute resolution and expert services firm headquartered in Lusaka, Zambia. We serve clients across Africa and beyond, handling complex disputes in construction, infrastructure, commercial, and industrial sectors.</p>
+          <p style="margin-bottom:28px;">Our team comprises leading arbitrators, mediators, adjudicators, and expert witnesses with technical, legal, and commercial expertise developed over decades of international practice. We operate with unwavering integrity, impartiality, and professionalism.</p>
+          <button class="btn btn-primary" onclick="showPage('about')">Learn About Us <i class="fa fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="text-center mb-56 fade-in">
+        <span class="section-label" style="color:var(--red-400);">Our Foundation</span>
+        <h2 class="section-title">The Values We Stand By</h2>
+        <div class="divider divider-center" style="background:var(--red-400);"></div>
+      </div>
+      <div class="corevalues" >
+        <div class="value-card fade-in"><div class="value-icon"><i class="fa fa-handshake"></i></div><h4>Integrity</h4><p>We uphold the highest ethical standards in every engagement, without compromise.</p></div>
+        <div class="value-card fade-in"><div class="value-icon"><i class="fa fa-scale-balanced"></i></div><h4>Neutrality</h4><p>Absolute impartiality is the cornerstone of every process we conduct.</p></div>
+        <div class="value-card fade-in"><div class="value-icon"><i class="fa fa-graduation-cap"></i></div><h4>Expertise</h4><p>Deep technical, legal, and commercial knowledge applied to every case.</p></div>
+        <div class="value-card fade-in"><div class="value-icon"><i class="fa fa-briefcase"></i></div><h4>Professionalism</h4><p>Disciplined, structured, and respectful in all proceedings and communications.</p></div>
+        <div class="value-card fade-in"><div class="value-icon"><i class="fa fa-clock"></i></div><h4>Efficiency</h4><p>We respect commercial timelines and strive for timely, cost-effective resolution.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Showcase -->
+  <section class="section">
+    <div class="container">
+      <div class="flex-between mb-56 fade-in" style="flex-wrap:wrap;gap:20px;">
+        <div>
+          <span class="section-label">Our Work</span>
+          <h2 class="section-title">Featured Projects</h2>
+          <div class="divider"></div>
+        </div>
+        <button class="btn btn-outline" onclick="showPage('projects')">View All Projects <i class="fa fa-arrow-right"></i></button>
+      </div>
+      <div class="grid-3">
+        <div class="project-card fade-in">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" alt="Infrastructure Project">
+            <span class="project-tag">Infrastructure</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta"><span><i class="fa fa-location-dot"></i>Lusaka, Zambia</span><span><i class="fa fa-calendar"></i>2023</span></div>
+            <h3>Kafue Road Corridor Dispute</h3>
+            <p>Complex multi-party construction dispute involving delay claims, variation disputes, and quantum disagreements on a major road project.</p>
+            <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project1')">View Project</button>
+          </div>
+        </div>
+        <div class="project-card fade-in">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="Commercial Project">
+            <span class="project-tag">Commercial</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta"><span><i class="fa fa-location-dot"></i>Kitwe, Zambia</span><span><i class="fa fa-calendar"></i>2022</span></div>
+            <h3>Copperbelt Commercial Centre Arbitration</h3>
+            <p>Arbitration proceedings concerning a major commercial development contract dispute involving multiple stakeholders and cross-border considerations.</p>
+            <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project2')">View Project</button>
+          </div>
+        </div>
+        <div class="project-card fade-in">
+          <div class="project-card-img">
+            <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=600&q=80" alt="Construction Project">
+            <span class="project-tag">Construction</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta"><span><i class="fa fa-location-dot"></i>Ndola, Zambia</span><span><i class="fa fa-calendar"></i>2023</span></div>
+            <h3>Hospital Expansion Mediation</h3>
+            <p>Successful mediation of contractor-employer dispute arising from design deficiencies and scope changes on a public health facility project.</p>
+            <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project3')">View Project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership -->
+  <!-- <section class="section section-alt">
+    <div class="container">
+      <div class="text-center mb-56 fade-in">
+        <span class="section-label">Leadership</span>
+        <h2 class="section-title">Our Managing Director</h2>
+        <div class="divider divider-center"></div>
+      </div>
+      <div class="leadership-card fade-in">
+        <div class="leader-img">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Managing Director">
+        </div>
+        <div>
+          <p class="leader-role">Managing Director &amp; Principal Arbitrator</p>
+          <h3 class="leader-name">Mr. David K. Mwansa</h3>
+          <p class="leader-creds">FCIArb | FIOD | FZIPS | BSc Civil Engineering | LLM (Dispute Resolution)</p>
+          <div class="divider" style="margin-top:12px;margin-bottom:20px;"></div>
+          <p class="leader-bio">David Mwansa is a Fellow of the Chartered Institute of Arbitrators and a registered arbitrator, adjudicator, and mediator with over 20 years of experience in construction and commercial dispute resolution. He has acted as sole arbitrator, chair, and party-appointed arbitrator on disputes involving contracts under FIDIC, JBC, NEC, and bespoke frameworks. His expert witness practice spans delay, quantum, and technical disputes across infrastructure, mining, and commercial projects in Zambia and internationally. He is committed to cost-effective, impartial, and technically rigorous dispute resolution for the benefit of all parties and the wider industry.</p>
+          <div style="margin-top:24px;">
+            <button class="btn btn-primary" onclick="showPage('about')">Full Profile <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Why Choose Us -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-56 fade-in">
+        <span class="section-label">Why Forensic Quantum Consultants Limited</span>
+        <h2 class="section-title">The Advantage You Can Trust</h2>
+        <div class="divider divider-center"></div>
+      </div>
+      <div class="grid-2" style="gap:24px;">
+        <div class="benefit-item fade-in"><div class="benefit-icon"><i class="fa fa-industry"></i></div><div><h4>Industry Expertise</h4><p>Deep knowledge across construction, infrastructure, commercial, mining, and advisory sectors spanning decades of practice.</p></div></div>
+        <div class="benefit-item fade-in"><div class="benefit-icon"><i class="fa fa-scale-balanced"></i></div><div><h4>Independent &amp; Impartial</h4><p>Complete neutrality and independence from all parties, upholding natural justice and due process at every stage.</p></div></div>
+        <div class="benefit-item fade-in"><div class="benefit-icon"><i class="fa fa-diagram-project"></i></div><div><h4>Structured Methodology</h4><p>Proven procedural frameworks ensure thorough, fair, and efficient resolution aligned with international best practice.</p></div></div>
+        <div class="benefit-item fade-in"><div class="benefit-icon"><i class="fa fa-lock"></i></div><div><h4>Confidential Handling</h4><p>All proceedings, evidence, and outcomes are handled with strict confidentiality and data protection.</p></div></div>
+        <div class="benefit-item fade-in"><div class="benefit-icon"><i class="fa fa-clock"></i></div><div><h4>Timely Resolution</h4><p>Efficient case management and timetabling to deliver determinations within agreed, commercially sensitive timelines.</p></div></div>
+        <div class="benefit-item fade-in"><div class="benefit-icon"><i class="fa fa-globe-africa"></i></div><div><h4>Regional Reach</h4><p>Based in Lusaka with a network spanning Southern Africa, enabling multi-jurisdictional dispute handling.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Preview -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="grid-2" style="gap:56px;">
+        <div class="fade-in">
+          <span class="section-label">Get In Touch</span>
+          <h2 class="section-title">Speak to Our Team</h2>
+          <div class="divider"></div>
+          <p style="margin-top:20px;margin-bottom:32px;">Whether you face an imminent dispute, are engaged in proceedings, or require expert advisory support, our team is ready to assist. Reach out for a confidential initial discussion.</p>
+          <div class="contact-info-item"><div class="contact-info-icon"><i class="fa fa-location-dot"></i></div><div><div class="contact-info-label">Office Address</div><div class="contact-info-value">FOXDALE COURT, LUSAKA ZAMBIA</div></div></div>
+          <div class="contact-info-item"><div class="contact-info-icon"><i class="fa fa-phone"></i></div><div><div class="contact-info-label">Phone</div><div class="contact-info-value">+260 961904061</div></div></div>
+          <div class="contact-info-item"><div class="contact-info-icon"><i class="fa fa-envelope"></i></div><div><div class="contact-info-label">Email</div><div class="contact-info-value">kampambalukwesa@yahoo.com</div></div></div>
+          <button class="btn btn-primary mt-16" onclick="showPage('contact')">Full Contact Details <i class="fa fa-arrow-right"></i></button>
+        </div>
+        <div class="fade-in">
+          <div class="contact-mini-form">
+            <h3>Quick Enquiry</h3>
+            <div class="form-group"><label>Full Name</label><input class="form-control" type="text" placeholder="Your full name"></div>
+            <div class="form-group"><label>Email Address</label><input class="form-control" type="email" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Message</label><textarea class="form-control" placeholder="Briefly describe your enquiry…"></textarea></div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="alert('Thank you. We will be in touch shortly.')">Send Enquiry <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo" style="margin-bottom:20px;">
+            <div class="logo-mark">FC</div>
+            <div class="logo-text">
+              <span class="logo-name">Forensic Quantum</span>
+              <span class="logo-tagline" style="color:rgba(255,255,255,0.4);">Consultants &amp; Limited</span>
+            </div>
+          </div>
+          <p style="color: white;">
+            Forensic Quantum Consultants & Limited provides independent, expert-led dispute resolution and advisory services from our base in Lusaka, Zambia. Trusted by contractors, employers, financiers, and government across Southern Africa.</p>
+          <div class="footer-social">
+            <div class="social-icon"><i class="fab fa-linkedin-in"></i></div>
+            <div class="social-icon"><i class="fab fa-twitter"></i></div>
+            <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a onclick="showPage('home')">Home</a>
+            <a onclick="showPage('about')">About Us</a>
+            <a onclick="showPage('projects')">Projects</a>
+            <a onclick="showPage('contact')">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <div class="footer-links">
+            <a onclick="showPage('services'); scrollToService('adjudication')">Adjudication</a>
+            <a onclick="showPage('services'); scrollToService('arbitration')">Arbitration</a>
+            <a onclick="showPage('services'); scrollToService('mediation')">Mediation</a>
+            <a onclick="showPage('services'); scrollToService('dispute-boards')">Dispute Boards</a>
+            <a onclick="showPage('services'); scrollToService('expert-determination')">Expert Determination</a>
+            <a onclick="showPage('services'); scrollToService('expert-services')">Expert Services</a>
+          </div>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <div class="footer-contact-item"><i class="fa fa-location-dot"></i><span>FOXDALE COURT, LUSAKA ZAMBIA</span></div>
+          <div class="footer-contact-item"><i class="fa fa-phone"></i><span>+260 961904061</span></div>
+          <div class="footer-contact-item"><i class="fa fa-envelope"></i><span>kampambalukwesa@yahoo.com</span></div>
+          <div class="footer-contact-item" style="margin-top:16px;"><i class="fa fa-clock"></i><div><strong style="color:rgba(255,255,255,0.8);">Working Hours</strong><br><span style="font-size:0.82rem;">Mon–Fri: 08:00 – 17:00<br>Sat: 09:00 – 13:00</span></div></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Forensic Quantum Consultants & Limited. All rights reserved.</span>
+        <span>
+          <a href="#" onclick="return false;">Privacy Policy</a> &nbsp;|&nbsp;
+          <a href="#" onclick="return false;">Terms of Service</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     SERVICES PAGE
+     ============================================================ -->
+<div class="page" id="page-services">
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="breadcrumb">
+          <span onclick="showPage('home')">Home</span>
+          <span class="separator">›</span>
+          <span class="current">Services</span>
+        </div>
+        <h1>Our Services</h1>
+        <p>A comprehensive suite of dispute resolution and expert advisory services delivered with independence, expertise, and professionalism.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Nav -->
+  <div class="services-nav-sticky">
+    <div class="services-nav-inner">
+      <button class="service-nav-btn active" onclick="scrollToService('adjudication'); setActiveServiceBtn(this)">Adjudication</button>
+      <button class="service-nav-btn" onclick="scrollToService('arbitration'); setActiveServiceBtn(this)">Arbitration</button>
+      <button class="service-nav-btn" onclick="scrollToService('mediation'); setActiveServiceBtn(this)">Mediation</button>
+      <button class="service-nav-btn" onclick="scrollToService('dispute-boards'); setActiveServiceBtn(this)">Dispute Boards</button>
+      <button class="service-nav-btn" onclick="scrollToService('expert-determination'); setActiveServiceBtn(this)">Expert Determination</button>
+      <button class="service-nav-btn" onclick="scrollToService('expert-services'); setActiveServiceBtn(this)">Expert Services</button>
+    </div>
+  </div>
+
+  <!-- Adjudication -->
+  <div class="service-detail-section" id="adjudication">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <div class="service-detail-header">
+            <div class="service-detail-icon"><i class="fa fa-gavel"></i></div>
+            <div>
+              <span class="section-label">Service 01</span>
+              <h2>Adjudication</h2>
+            </div>
+          </div>
+          <div class="divider" style="margin-bottom:24px;"></div>
+          <p style="margin-bottom:16px;">Adjudication is a statutory, fast-track dispute resolution mechanism widely used in construction and engineering. It provides parties with a binding interim decision within a defined, short timeframe — typically 28 days from referral — enabling projects to continue without prolonged disruption.</p>
+          <p>Our adjudicators bring extensive technical and contractual knowledge to provide fair, well-reasoned decisions on payment disputes, variations, extension of time, and other contract issues. All proceedings are conducted in accordance with the applicable statutory scheme and rules of natural justice.</p>
+          <div class="service-benefits">
+            <h4>Key Benefits</h4>
+            <div class="benefit-list">
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Binding interim determination within 28 days</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Preserves cash flow and project continuity</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Cost-effective alternative to arbitration for lower-value disputes</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Enforceable immediately unless overturned on final resolution</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Technically qualified adjudicators with construction expertise</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=700&q=80" alt="Adjudication" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);height:400px;object-fit:cover;width:100%;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arbitration -->
+  <div class="service-detail-section" id="arbitration">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=700&q=80" alt="Arbitration" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);height:400px;object-fit:cover;width:100%;">
+        </div>
+        <div>
+          <div class="service-detail-header">
+            <div class="service-detail-icon"><i class="fa fa-scale-balanced"></i></div>
+            <div>
+              <span class="section-label">Service 02</span>
+              <h2>Arbitration</h2>
+            </div>
+          </div>
+          <div class="divider" style="margin-bottom:24px;"></div>
+          <p style="margin-bottom:16px;">Arbitration is a private, binding dispute resolution process in which parties submit their dispute to one or more independent arbitrators. The award rendered is legally enforceable in the same manner as a court judgment, including internationally under the New York Convention.</p>
+          <p>Our arbitrators are Fellows of the Chartered Institute of Arbitrators, experienced in conducting proceedings under ICC, UNCITRAL, LCIA, and domestic institutional rules. We handle complex multi-party disputes with substantial claims across construction, commercial, and infrastructure sectors.</p>
+          <div class="service-benefits">
+            <h4>Key Benefits</h4>
+            <div class="benefit-list">
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Legally binding, internationally enforceable awards</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Full confidentiality of proceedings and award</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Choice of arbitrator with technical expertise</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Procedural flexibility tailored to dispute complexity</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Neutral forum preferred by international contracting parties</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mediation -->
+  <div class="service-detail-section" id="mediation">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <div class="service-detail-header">
+            <div class="service-detail-icon"><i class="fa fa-handshake"></i></div>
+            <div>
+              <span class="section-label">Service 03</span>
+              <h2>Mediation</h2>
+            </div>
+          </div>
+          <div class="divider" style="margin-bottom:24px;"></div>
+          <p style="margin-bottom:16px;">Mediation is a voluntary, confidential process in which a skilled, neutral mediator facilitates negotiation between disputing parties to achieve a mutually acceptable settlement. Unlike adjudication or arbitration, the mediator does not impose a decision — the outcome is shaped entirely by the parties themselves.</p>
+          <p>Our mediators are trained and accredited in facilitative and evaluative mediation techniques. We create structured, safe environments where parties can communicate openly, explore interests, and reach commercial agreements that litigation and arbitration often cannot achieve.</p>
+          <div class="service-benefits">
+            <h4>Key Benefits</h4>
+            <div class="benefit-list">
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Preserves commercial relationships and reputations</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Faster and less expensive than formal proceedings</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Parties control the outcome and terms of settlement</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Fully confidential — nothing can be used in later proceedings</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>High success rate when parties engage in good faith</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1573165850883-9b0e18c44bd2?w=700&q=80" alt="Mediation" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);height:400px;object-fit:cover;width:100%;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dispute Boards -->
+  <div class="service-detail-section" id="dispute-boards">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=700&q=80" alt="Dispute Boards" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);height:400px;object-fit:cover;width:100%;">
+        </div>
+        <div>
+          <div class="service-detail-header">
+            <div class="service-detail-icon"><i class="fa fa-users"></i></div>
+            <div>
+              <span class="section-label">Service 04</span>
+              <h2>Dispute Boards</h2>
+            </div>
+          </div>
+          <div class="divider" style="margin-bottom:24px;"></div>
+          <p style="margin-bottom:16px;">Dispute Boards are standing panels of expert and neutral members established at the outset of long-term infrastructure or construction projects. They visit the project regularly, become familiar with the works and contract, and are available to make recommendations or binding decisions on any disputes that arise during execution.</p>
+          <p>Resolve Advisory provides experienced Dispute Adjudication Boards (DAB) and Dispute Review Boards (DRB) in compliance with FIDIC and other international frameworks, significantly reducing the risk of disputes reaching arbitration or litigation.</p>
+          <div class="service-benefits">
+            <h4>Key Benefits</h4>
+            <div class="benefit-list">
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Real-time dispute prevention and early resolution</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Board members build deep knowledge of the project</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Reduces risk of major disputes reaching arbitration</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>FIDIC-compliant advisory and adjudicative functions</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Supports project continuity and stakeholder confidence</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expert Determination -->
+  <div class="service-detail-section" id="expert-determination">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <div class="service-detail-header">
+            <div class="service-detail-icon"><i class="fa fa-magnifying-glass"></i></div>
+            <div>
+              <span class="section-label">Service 05</span>
+              <h2>Expert Determination</h2>
+            </div>
+          </div>
+          <div class="divider" style="margin-bottom:24px;"></div>
+          <p style="margin-bottom:16px;">Expert Determination is a private, binding dispute resolution process in which an independent expert with specialist knowledge decides a technical, financial, or valuation question. Unlike arbitration, the expert acts on their own knowledge and investigation, not purely on submissions from the parties.</p>
+          <p>This mechanism is particularly well-suited to disputes involving accounting, valuation, engineering, or other specialist technical matters. The expert's determination is binding unless there is manifest error or fraud.</p>
+          <div class="service-benefits">
+            <h4>Key Benefits</h4>
+            <div class="benefit-list">
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Expert-led: determiner has domain expertise</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Binding outcome — no further proceedings on the same issue</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Faster and less expensive than full arbitration</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Ideal for valuation, technical, or quantum disputes</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Full confidentiality maintained throughout</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&q=80" alt="Expert Determination" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);height:400px;object-fit:cover;width:100%;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expert Services -->
+  <div class="service-detail-section" id="expert-services">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <img src="https://images.unsplash.com/photo-1560472355-536de3962603?w=700&q=80" alt="Expert Services" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);height:400px;object-fit:cover;width:100%;">
+        </div>
+        <div>
+          <div class="service-detail-header">
+            <div class="service-detail-icon"><i class="fa fa-briefcase"></i></div>
+            <div>
+              <span class="section-label">Service 06</span>
+              <h2>Expert Services</h2>
+            </div>
+          </div>
+          <div class="divider" style="margin-bottom:24px;"></div>
+          <p style="margin-bottom:16px;">Beyond formal dispute resolution processes, Resolve Advisory provides a range of technical expert and advisory services to parties, legal counsel, insurers, and financiers. These services support parties at all stages — from dispute avoidance through to enforcement.</p>
+          <p>Our expert services include independent quantum assessments, delay and disruption analysis, contract review and advisory, expert witness preparation, and claims documentation review.</p>
+          <div class="service-benefits">
+            <h4>Key Benefits</h4>
+            <div class="benefit-list">
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Independent quantum and delay analysis</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Expert witness reports for arbitration and court proceedings</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Contract review and risk identification advisory</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Claims preparation, review, and response support</div>
+              <div class="benefit-list-item"><i class="fa fa-check-circle"></i>Dispute avoidance advisory on major projects</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Process Section -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="text-center mb-56 fade-in">
+        <span class="section-label">How We Work</span>
+        <h2 class="section-title">Our Four-Step Process</h2>
+        <div class="divider divider-center"></div>
+      </div>
+      <div class="grid-4">
+        <div class="process-step fade-in"><div class="step-number">1</div><h4>Initial Consultation</h4><p>We conduct a confidential preliminary meeting to understand the nature and scope of the dispute and advise on the most appropriate resolution process.</p></div>
+        <div class="process-step fade-in"><div class="step-number">2</div><h4>Case Evaluation</h4><p>Thorough review of contracts, documents, and submissions to assess the merits, identify key issues, and establish the procedural timetable.</p></div>
+        <div class="process-step fade-in"><div class="step-number">3</div><h4>Structured Proceedings</h4><p>Formal proceedings are conducted with rigorous fairness — hearing both parties, testing evidence, and applying expert analysis to the issues in dispute.</p></div>
+        <div class="process-step fade-in"><div class="step-number">4</div><h4>Resolution &amp; Determination</h4><p>A well-reasoned, written determination or award is issued, enforceable under the applicable law and any relevant institutional rules.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="container">
+      <h2>Need Professional Dispute Resolution?</h2>
+      <p>Our specialist team is ready to assist with your dispute, whether you need a formal arbitration, adjudication, mediation, or expert advisory support.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-white" onclick="showPage('contact')">Request Consultation <i class="fa fa-arrow-right"></i></button>
+        <button class="btn btn-ghost" onclick="showPage('contact')">Contact Us Today</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer (reused via JS) -->
+  <div id="services-footer-placeholder"></div>
+</div>
+
+<!-- ============================================================
+     PROJECTS PAGE
+     ============================================================ -->
+<div class="page" id="page-projects">
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="breadcrumb"><span onclick="showPage('home')">Home</span><span class="separator">›</span><span class="current">Projects</span></div>
+        <h1>Our Projects</h1>
+        <p>A selection of resolved disputes and advisory engagements across Zambia and Southern Africa.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <section class="section section-dark" style="padding:60px 0;">
+    <div class="container">
+      <div class="stats-bar">
+        <div class="stat-item fade-in"><span class="stat-number">50<span class="stat-plus">+</span></span><span class="stat-label">Cases Handled</span></div>
+        <div class="stat-item fade-in"><span class="stat-number">20<span class="stat-plus">+</span></span><span class="stat-label">Years Experience</span></div>
+        <div class="stat-item fade-in"><span class="stat-number">95<span class="stat-plus">%</span></span><span class="stat-label">Resolution Rate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Grid -->
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" onclick="filterProjects('all', this)">All</button>
+        <button class="filter-btn" onclick="filterProjects('construction', this)">Construction</button>
+        <button class="filter-btn" onclick="filterProjects('commercial', this)">Commercial</button>
+        <button class="filter-btn" onclick="filterProjects('infrastructure', this)">Infrastructure</button>
+        <button class="filter-btn" onclick="filterProjects('advisory', this)">Advisory</button>
+      </div>
+      <div class="projects-grid">
+        <!-- Infrastructure -->
+        <div class="project-item" data-cat="infrastructure">
+          <div class="project-card">
+            <div class="project-card-img"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" alt="P1"><span class="project-tag">Infrastructure</span></div>
+            <div class="project-card-body">
+              <div class="project-meta"><span><i class="fa fa-location-dot"></i>Lusaka</span><span><i class="fa fa-calendar"></i>2023</span></div>
+              <h3>Kafue Road Corridor Dispute</h3>
+              <p>Multi-party arbitration on delay claims, variations, and final account on a major trunk road project.</p>
+              <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project1')">View Project</button>
+            </div>
+          </div>
+        </div>
+        <!-- Commercial -->
+        <div class="project-item" data-cat="commercial">
+          <div class="project-card">
+            <div class="project-card-img"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="P2"><span class="project-tag">Commercial</span></div>
+            <div class="project-card-body">
+              <div class="project-meta"><span><i class="fa fa-location-dot"></i>Kitwe</span><span><i class="fa fa-calendar"></i>2022</span></div>
+              <h3>Copperbelt Commercial Centre</h3>
+              <p>Arbitration proceedings on a complex commercial development contract dispute with cross-border elements.</p>
+              <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project2')">View Project</button>
+            </div>
+          </div>
+        </div>
+        <!-- Construction -->
+        <div class="project-item" data-cat="construction">
+          <div class="project-card">
+            <div class="project-card-img"><img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=600&q=80" alt="P3"><span class="project-tag">Construction</span></div>
+            <div class="project-card-body">
+              <div class="project-meta"><span><i class="fa fa-location-dot"></i>Ndola</span><span><i class="fa fa-calendar"></i>2023</span></div>
+              <h3>Hospital Expansion Mediation</h3>
+              <p>Successful mediation of contractor-employer dispute on a public health facility expansion project.</p>
+              <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project3')">View Project</button>
+            </div>
+          </div>
+        </div>
+        <!-- Advisory -->
+        <div class="project-item" data-cat="advisory">
+          <div class="project-card">
+            <div class="project-card-img"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80" alt="P4"><span class="project-tag">Advisory</span></div>
+            <div class="project-card-body">
+              <div class="project-meta"><span><i class="fa fa-location-dot"></i>Lusaka</span><span><i class="fa fa-calendar"></i>2022</span></div>
+              <h3>Government Contract Claims Review</h3>
+              <p>Independent expert advisory on quantum and delay claims submitted by a contractor under a public procurement contract.</p>
+              <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project4')">View Project</button>
+            </div>
+          </div>
+        </div>
+        <!-- Construction -->
+        <div class="project-item" data-cat="construction">
+          <div class="project-card">
+            <div class="project-card-img"><img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80" alt="P5"><span class="project-tag">Construction</span></div>
+            <div class="project-card-body">
+              <div class="project-meta"><span><i class="fa fa-location-dot"></i>Livingstone</span><span><i class="fa fa-calendar"></i>2021</span></div>
+              <h3>Tourism Complex Adjudication</h3>
+              <p>Adjudication on final account and payment dispute for a major tourism and hospitality development project.</p>
+              <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project5')">View Project</button>
+            </div>
+          </div>
+        </div>
+        <!-- Infrastructure -->
+        <div class="project-item" data-cat="infrastructure">
+          <div class="project-card">
+            <div class="project-card-img"><img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80" alt="P6"><span class="project-tag">Infrastructure</span></div>
+            <div class="project-card-body">
+              <div class="project-meta"><span><i class="fa fa-location-dot"></i>Lusaka</span><span><i class="fa fa-calendar"></i>2020</span></div>
+              <h3>Water Supply Scheme Dispute Board</h3>
+              <p>Dispute Adjudication Board service for a large FIDIC-based water infrastructure project over a 36-month period.</p>
+              <button class="btn btn-outline" style="padding:8px 18px;font-size:0.82rem;" onclick="openModal('project6')">View Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="container">
+      <h2>Have a Project in Mind?</h2>
+      <p>Our team is available for dispute resolution, expert advisory, and dispute board appointments across Zambia and the region.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-white" onclick="showPage('contact')">Contact Us Today <i class="fa fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+  <div id="projects-footer-placeholder"></div>
+</div>
+
+<!-- ============================================================
+     ABOUT PAGE
+     ============================================================ -->
+<div class="page" id="page-about">
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="breadcrumb"><span onclick="showPage('home')">Home</span><span class="separator">›</span><span class="current">About</span></div>
+        <h1>About Forensic Quantum Consultants & Limited</h1>
+        <p>Specialists in dispute resolution and expert services. Independent, trusted, and authoritative.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company Overview -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="gap:60px;">
+        <div class="fade-in">
+          <span class="section-label">Who We Are</span>
+          <h2 class="section-title">A Practice Built on Integrity &amp; Expertise</h2>
+          <div class="divider"></div>
+          <p style="margin:20px 0 16px;">Forensic Quantum Consultants & Limited is Zambia's leading specialist dispute resolution and expert services firm. Established in 2025, we have built a reputation for independent, technically rigorous, and professionally conducted dispute resolution services across the full spectrum of methods — from adjudication and arbitration to mediation and expert determination.</p>
+          <p style="margin-bottom:16px;">Our founders and principals bring combined experience exceeding four decades, with international credentials from the Chartered Institute of Arbitrators, RICS, CIOB, and other leading professional bodies. We are called upon by parties, employers, insurers, and legal practitioners who require independent expertise they can trust.</p>
+          <p>We operate with a commitment to impartiality, rigour, and respect for due process. Every engagement — regardless of size or complexity — receives the full attention and expertise of our senior professionals.</p>
+        </div>
+        <div class="fade-in">
+          <img src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=700&q=80" alt="Resolve Advisory" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);width:100%;height:400px;object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission, Vision & Goals -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="text-center mb-56 fade-in">
+        <span class="section-label">Purpose &amp; Direction</span>
+        <h2 class="section-title">Mission, Vision &amp; Goals</h2>
+        <div class="divider divider-center"></div>
+      </div>
+      <div class="grid-3">
+        <div class="mission-card fade-in">
+          <div class="mission-icon"><i class="fa fa-bullseye"></i></div>
+          <h3>Our Mission</h3>
+          <p>To provide independent, expert-led dispute resolution services that deliver fair, timely, and cost-effective outcomes for parties across all sectors — preserving commercial relationships and upholding justice.</p>
+        </div>
+        <div class="mission-card fade-in">
+          <div class="mission-icon"><i class="fa fa-eye"></i></div>
+          <h3>Our Vision</h3>
+          <p>To be the foremost dispute resolution and expert services practice in Central and Southern Africa, recognised internationally for our technical excellence, integrity, and positive contribution to the profession.</p>
+        </div>
+        <div class="mission-card fade-in">
+          <div class="mission-icon"><i class="fa fa-flag"></i></div>
+          <h3>Our Goals</h3>
+          <p>To advance dispute resolution practice in Zambia, develop the next generation of dispute resolution professionals, and deliver consistently high-quality, impartial outcomes for every client engagement we undertake.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values Expanded -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-56 fade-in">
+        <span class="section-label">Our Foundation</span>
+        <h2 class="section-title">Core Values — In Depth</h2>
+        <div class="divider divider-center"></div>
+      </div>
+      <div class="grid-2" style="gap:28px;">
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon" style="background:var(--blue-100);color:var(--blue-600);"><i class="fa fa-handshake"></i></div>
+          <div>
+            <h4>Integrity</h4>
+            <p>We hold ourselves to the highest ethical standards. Every decision, recommendation, and determination we issue is guided by honesty, fairness, and professional accountability — irrespective of the identity or influence of the parties involved.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon" style="background:var(--blue-100);color:var(--blue-600);"><i class="fa fa-scale-balanced"></i></div>
+          <div>
+            <h4>Neutrality</h4>
+            <p>As independent dispute resolvers, absolute neutrality and impartiality are not aspirations — they are obligations. We declare conflicts, refuse appointments where independence is compromised, and conduct all proceedings without fear or favour.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon" style="background:var(--blue-100);color:var(--blue-600);"><i class="fa fa-graduation-cap"></i></div>
+          <div>
+            <h4>Expertise</h4>
+            <p>Resolve Advisory's value is grounded in deep, current, and multi-disciplinary expertise. Our principals hold internationally recognised qualifications and remain active in professional development, ensuring our knowledge keeps pace with evolving practice and law.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon" style="background:var(--blue-100);color:var(--blue-600);"><i class="fa fa-briefcase"></i></div>
+          <div>
+            <h4>Professionalism</h4>
+            <p>We conduct every engagement with discipline, courtesy, and rigour. Our communications, procedural management, and written determinations reflect the highest standards of professional practice expected of senior dispute resolution practitioners.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon" style="background:var(--blue-100);color:var(--blue-600);"><i class="fa fa-clock"></i></div>
+          <div>
+            <h4>Efficiency</h4>
+            <p>Disputes are costly — in time, resource, and business disruption. We manage proceedings purposefully to deliver well-reasoned outcomes within commercially appropriate timelines, without sacrificing fairness or thoroughness.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon" style="background:var(--blue-100);color:var(--blue-600);"><i class="fa fa-lock"></i></div>
+          <div>
+            <h4>Confidentiality</h4>
+            <p>The privacy of proceedings, submissions, and determinations is fundamental to dispute resolution. We uphold strict confidentiality obligations and implement appropriate safeguards for all sensitive commercial and technical information.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="container">
+      <h2>Ready to Work with Us?</h2>
+      <p>Contact our team to discuss your dispute resolution or expert advisory requirements in confidence.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-white" onclick="showPage('contact')">Get In Touch <i class="fa fa-arrow-right"></i></button>
+        <button class="btn btn-ghost" onclick="showPage('services')">Explore Services</button>
+      </div>
+    </div>
+  </div>
+  <div id="about-footer-placeholder"></div>
+</div>
+
+<!-- ============================================================
+     CONTACT PAGE
+     ============================================================ -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="breadcrumb"><span onclick="showPage('home')">Home</span><span class="separator">›</span><span class="current">Contact</span></div>
+        <h1>Contact Us</h1>
+        <p>We welcome enquiries from parties, legal representatives, project owners, and financiers.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Cards -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-4">
+        <div class="contact-card fade-in">
+          <div class="contact-card-icon"><i class="fa fa-location-dot"></i></div>
+          <h3>Our Office</h3>
+          <p>FOXDALE COURT, LUSAKA ZAMBIA</p>
+        </div>
+        <div class="contact-card fade-in">
+          <div class="contact-card-icon"><i class="fa fa-phone"></i></div>
+          <h3>Phone</h3>
+          <p>+260961904061</p>
+          <div class="social-links-row" style="margin-top:10px;"><div class="social-icon"><i class="fab fa-whatsapp"></i></div></div>
+        </div>
+        <div class="contact-card fade-in">
+          <div class="contact-card-icon"><i class="fa fa-envelope"></i></div>
+          <h3>Email</h3>
+          <p>kampambalukwesa@yahoo.com</p>
+        </div>
+        <div class="contact-card fade-in">
+          <div class="contact-card-icon"><i class="fa fa-clock"></i></div>
+          <h3>Business Hours</h3>
+          <p>Monday – Friday<br>08:00 – 17:00<br>Saturday: 09:00 – 13:00</p>
+          <div class="social-links-row">
+            <div class="social-icon"><i class="fab fa-linkedin-in"></i></div>
+            <div class="social-icon"><i class="fab fa-twitter"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form & Map -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="grid-2" style="gap:56px;align-items:start;">
+        <div class="contact-full-form fade-in">
+          <span class="section-label">Get In Touch</span>
+          <h2>Send Us a Message</h2>
+          <div class="divider" style="margin-bottom:28px;"></div>
+          <form id="contactForm" onsubmit="submitContactForm(event)">
+            <div class="form-row">
+              <div class="form-group"><label>Full Name *</label><input class="form-control" id="cf-name" type="text" placeholder="Your full name" required></div>
+              <div class="form-group"><label>Email Address *</label><input class="form-control" id="cf-email" type="email" placeholder="your@email.com" required></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Phone Number</label><input class="form-control" id="cf-phone" type="tel" placeholder="+260 ..."></div>
+              <div class="form-group"><label>Company / Organisation</label><input class="form-control" id="cf-company" type="text" placeholder="Your company name"></div>
+            </div>
+            <div class="form-group"><label>Service Interest</label>
+              <select class="form-control" id="cf-service">
+                <option value="">— Select a Service —</option>
+                <option>Adjudication</option>
+                <option>Arbitration</option>
+                <option>Mediation</option>
+                <option>Dispute Boards</option>
+                <option>Expert Determination</option>
+                <option>Expert Services</option>
+                <option>General Enquiry</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Message *</label><textarea class="form-control" id="cf-message" rows="5" placeholder="Please describe your dispute or enquiry in brief…" required></textarea></div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Send Message <i class="fa fa-arrow-right"></i></button>
+          </form>
+        </div>
+        <div class="fade-in">
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d2980.4976310350853!2d28.31508312386863!3d-15.371280812676385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sfoxdale%20court%20lusaka!5e1!3m2!1sen!2szm!4v1772387618017!5m2!1sen!2szm" allowfullscreen="" loading="lazy" ></iframe>></iframe>
+          </div>
+          <div style="margin-top:24px;background:var(--white);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-md);">
+            <h4 style="margin-bottom:14px;">Our Location</h4>
+            <div class="contact-info-item"><div class="contact-info-icon" style="width:36px;height:36px;"><i class="fa fa-location-dot"></i></div><div><div class="contact-info-value">FOXDALE COURT, LUSAKA ZAMBIA</div></div></div>
+            <div class="contact-info-item"><div class="contact-info-icon" style="width:36px;height:36px;"><i class="fa fa-phone"></i></div><div><div class="contact-info-value">+260 961904061</div></div></div>
+            <div class="contact-info-item" style="margin-bottom:0;"><div class="contact-info-icon" style="width:36px;height:36px;"><i class="fa fa-envelope"></i></div><div><div class="contact-info-value">kampambalukwesa@yahoo.com</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container" style="max-width:760px;">
+      <div class="text-center mb-56 fade-in">
+        <span class="section-label">FAQ</span>
+        <h2>Frequently Asked Questions</h2>
+        <div class="divider divider-center"></div>
+      </div>
+      <div class="fade-in">
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <h4>What industries and sectors do you serve?</h4>
+            <span class="accordion-icon"><i class="fa fa-plus"></i></span>
+          </button>
+          <div class="accordion-body">We serve parties across construction and engineering, infrastructure, commercial property, mining and extractives, public procurement, utilities, and financial services. Our dispute resolvers and expert witnesses bring sector-specific experience so that technical and commercial issues are understood in context.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <h4>How long does an arbitration typically take?</h4>
+            <span class="accordion-icon"><i class="fa fa-plus"></i></span>
+          </button>
+          <div class="accordion-body">The duration of arbitration depends heavily on the complexity and value of the dispute, the number of parties, and the volume of evidence. Straightforward disputes may be concluded within three to six months; complex, multi-issue cases may take twelve months or more. We work with parties to set a realistic timetable upfront and manage proceedings to avoid unnecessary delay.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <h4>Are dispute resolution proceedings confidential?</h4>
+            <span class="accordion-icon"><i class="fa fa-plus"></i></span>
+          </button>
+          <div class="accordion-body">Yes. Arbitration, adjudication, mediation, and expert determination proceedings conducted through Resolve Advisory are fully confidential. This encompasses all submissions, evidence, hearings, and the final determination or award. Confidentiality is one of the principal advantages of private dispute resolution over court litigation.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <h4>How do we commence a dispute resolution process with you?</h4>
+            <span class="accordion-icon"><i class="fa fa-plus"></i></span>
+          </button>
+          <div class="accordion-body">The process begins with a confidential initial consultation — by phone, email, or in person — in which we discuss the nature and background of the dispute, the contract provisions, and the most appropriate dispute resolution mechanism. We will then advise on the process, fees, and next steps. You can contact us via the form on this page, by phone, or by email to arrange this first discussion at no obligation.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <div class="cta-section">
+    <div class="container">
+      <h2>Start Your Project Today</h2>
+      <p>Our team stands ready to assist with your dispute resolution needs. Reach out to begin a confidential consultation.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-white" onclick="document.getElementById('cf-name').focus()">Begin Your Enquiry <i class="fa fa-arrow-right"></i></button>
+        <button class="btn btn-ghost" onclick="showPage('services')">View Our Services</button>
+      </div>
+    </div>
+  </div>
+  <div id="contact-footer-placeholder"></div>
+</div>
+
+<!-- ============================================================
+     MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalContent">
+    <!-- populated by JS -->
+  </div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// ========== PAGE DATA ==========
+const modalData = {
+  project1: {
+    title: 'Kafue Road Corridor Dispute',
+    cat: 'Infrastructure',
+    location: 'Lusaka, Zambia',
+    year: '2023',
+    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80',
+    desc: 'A complex multi-party arbitration arising from a major trunk road project in Zambia. The dispute involved delay and disruption claims, variation entitlement, extension of time assessment, and final account disagreements between the contractor and the Roads Development Agency.',
+    features: ['Delay & Disruption Analysis', 'Variation Assessment', 'Extension of Time Determination', 'Final Account Negotiation', 'Multi-party Proceedings'],
+    specs: [['Contract Value', 'ZMW 450M'], ['Claim Value', 'ZMW 85M'], ['Duration', '14 months'], ['Outcome', 'Award issued'], ['Process', 'Arbitration'], ['Rules', 'UNCITRAL']]
+  },
+  project2: {
+    title: 'Copperbelt Commercial Centre Arbitration',
+    cat: 'Commercial',
+    location: 'Kitwe, Zambia',
+    year: '2022',
+    img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80',
+    desc: 'Arbitration proceedings arising from a commercial property development contract. Disputes related to design liability, defects claims, and entitlement to contract price adjustments under an NEC3 contract. Cross-border elements required consideration of multiple jurisdictional matters.',
+    features: ['Design Liability Assessment', 'Defects Adjudication', 'Contract Price Review', 'Cross-Border Analysis', 'Expert Witness Management'],
+    specs: [['Contract Value', 'ZMW 220M'], ['Claim Value', 'ZMW 38M'], ['Duration', '10 months'], ['Outcome', 'Settlement achieved'], ['Process', 'Arbitration'], ['Rules', 'ICC']]
+  },
+  project3: {
+    title: 'Ndola Hospital Expansion Mediation',
+    cat: 'Construction',
+    location: 'Ndola, Zambia',
+    year: '2023',
+    img: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&q=80',
+    desc: 'Mediation of a contractor-employer dispute arising from design deficiencies, scope changes, and payment issues on a public health facility expansion project funded by an international development bank. Both parties achieved a mutually acceptable resolution, avoiding costly arbitration.',
+    features: ['Facilitative Mediation', 'Design Change Analysis', 'Payment Dispute Resolution', 'Development Bank Compliance', 'Settlement Documentation'],
+    specs: [['Contract Value', 'ZMW 180M'], ['Dispute Value', 'ZMW 22M'], ['Duration', '2 months'], ['Outcome', 'Settled'], ['Process', 'Mediation'], ['Funding', 'MDB-funded']]
+  },
+  project4: {
+    title: 'Government Contract Claims Review',
+    cat: 'Advisory',
+    location: 'Lusaka, Zambia',
+    year: '2022',
+    img: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
+    desc: 'Independent expert advisory engagement on behalf of a government ministry reviewing quantum and delay claims submitted by a road rehabilitation contractor. The review covered entitlement assessment, SCL Protocol delay analysis, and market-rate quantum verification.',
+    features: ['Independent Quantum Review', 'Delay & Disruption Analysis', 'SCL Protocol Application', 'Market Rate Assessment', 'Expert Report'],
+    specs: [['Contract Value', 'ZMW 320M'], ['Claims Reviewed', 'ZMW 54M'], ['Duration', '3 months'], ['Outcome', 'Advisory report issued'], ['Process', 'Expert Advisory'], ['Client', 'Government Ministry']]
+  },
+  project5: {
+    title: 'Tourism Complex Adjudication',
+    cat: 'Construction',
+    location: 'Livingstone, Zambia',
+    year: '2021',
+    img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80',
+    desc: 'Adjudication of a final account and payment dispute on a major tourism and hospitality complex. The adjudicator assessed disputed variations, retention entitlement, and set-off claims, delivering a binding decision within the statutory 28-day period.',
+    features: ['Final Account Adjudication', 'Variation Entitlement', 'Retention Assessment', 'Set-Off Analysis', '28-Day Timetable'],
+    specs: [['Contract Value', 'ZMW 95M'], ['Claim Value', 'ZMW 14M'], ['Duration', '28 days'], ['Outcome', 'Decision issued'], ['Process', 'Adjudication'], ['Contract', 'JBC Standard Form']]
+  },
+  project6: {
+    title: 'Water Supply Scheme Dispute Board',
+    cat: 'Infrastructure',
+    location: 'Lusaka, Zambia',
+    year: '2020',
+    img: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=800&q=80',
+    desc: 'Provision of a Dispute Adjudication Board (DAB) for a large FIDIC Yellow Book water supply scheme. The Board made three site visits per year, issued two formal recommendations during the contract, and successfully prevented disputes from escalating to arbitration.',
+    features: ['FIDIC DAB Appointment', 'Regular Site Visits', 'Informal Recommendations', 'Formal DAB Decisions', 'Dispute Prevention Advisory'],
+    specs: [['Contract Value', 'ZMW 680M'], ['Duration', '36 months'], ['Site Visits', '9 conducted'], ['Outcome', 'Dispute-free completion'], ['Process', 'Dispute Board'], ['Contract', 'FIDIC Yellow Book']]
+  }
+};
+
+// ========== PAGE SYSTEM ==========
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Update active nav
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  const activeLink = document.querySelector(`.nav-link[data-page="${page}"]`);
+  if (activeLink) activeLink.classList.add('active');
+  // Trigger fade-in
+  setTimeout(initFadeIn, 100);
+}
+
+// ========== MOBILE NAV ==========
+document.getElementById('hamburger').addEventListener('click', function() {
+  this.classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.getElementById('mobileOverlay').classList.toggle('open');
+  document.body.style.overflow = this.classList.contains('open') ? 'hidden' : '';
+});
+function closeMobileNav() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('mobileOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ========== STICKY HEADER ==========
+window.addEventListener('scroll', function() {
+  const h = document.getElementById('site-header');
+  h.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ========== SERVICES SCROLL ==========
+function scrollToService(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) { const offset = 72 + 56; const top = el.getBoundingClientRect().top + window.scrollY - offset; window.scrollTo({ top, behavior: 'smooth' }); }
+  }, 150);
+}
+function setActiveServiceBtn(btn) {
+  document.querySelectorAll('.service-nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ========== FILTER ==========
+function filterProjects(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-item').forEach(item => {
+    if (cat === 'all' || item.dataset.cat === cat) { item.classList.remove('hidden'); }
+    else { item.classList.add('hidden'); }
+  });
+}
+
+// ========== MODAL ==========
+function openModal(key) {
+  const d = modalData[key];
+  if (!d) return;
+  const specsHtml = d.specs.map(s => `<div class="spec-item"><span class="spec-label">${s[0]}</span><span class="spec-value">${s[1]}</span></div>`).join('');
+  const featuresHtml = d.features.map(f => `<div class="benefit-list-item"><i class="fa fa-check-circle"></i>${f}</div>`).join('');
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-img"><img src="${d.img}" alt="${d.title}"></div>
+    <div class="modal-body">
+      <div class="modal-header">
+        <div>
+          <span style="display:inline-block;background:var(--blue-600);color:white;padding:3px 12px;border-radius:50px;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">${d.cat}</span>
+          <h2 style="font-size:1.5rem;">${d.title}</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-meta"><span><i class="fa fa-location-dot" style="color:var(--blue-400);margin-right:4px;"></i>${d.location}</span><span><i class="fa fa-calendar" style="color:var(--blue-400);margin-right:4px;"></i>${d.year}</span></div>
+      <p style="color:var(--grey-700);line-height:1.8;margin-bottom:20px;">${d.desc}</p>
+      <h4 style="margin-bottom:12px;">Key Features</h4>
+      <div class="benefit-list" style="margin-bottom:20px;">${featuresHtml}</div>
+      <div class="modal-specs">
+        <h4>Technical Specifications</h4>
+        <div class="modal-specs-grid">${specsHtml}</div>
+      </div>
+      <div style="margin-top:24px;">
+        <button class="btn btn-primary" onclick="showPage('contact'); closeModal()">Discuss a Similar Matter <i class="fa fa-arrow-right"></i></button>
+      </div>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(event) {
+  if (event && event.target !== document.getElementById('modalOverlay')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ========== ACCORDION ==========
+function toggleAccordion(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  document.querySelectorAll('.accordion-header').forEach(b => { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
+  if (!isOpen) { btn.classList.add('open'); body.classList.add('open'); }
+}
+
+// ========== CONTACT FORM ==========
+function submitContactForm(e) {
+  e.preventDefault();
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-message').value.trim();
+  if (!name || !email || !msg) { alert('Please fill in all required fields.'); return; }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) { alert('Please enter a valid email address.'); return; }
+  alert(`Thank you, ${name}.\n\nYour message has been received. A member of our team will respond to you at ${email} within one business day.`);
+  document.getElementById('contactForm').reset();
+}
+
+// ========== FADE IN ==========
+function initFadeIn() {
+  const els = document.querySelectorAll('.fade-in:not(.visible)');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  els.forEach(el => observer.observe(el));
+}
+
+// ========== FOOTER CLONE ==========
+function cloneFooter() {
+  const footerSrc = document.querySelector('#page-home footer');
+  ['services-footer-placeholder', 'projects-footer-placeholder', 'about-footer-placeholder', 'contact-footer-placeholder'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = footerSrc.outerHTML;
+  });
+}
+
+// ========== INIT ==========
+document.addEventListener('DOMContentLoaded', function() {
+  cloneFooter();
+  initFadeIn();
+  // Re-init on scroll
+  window.addEventListener('scroll', initFadeIn, { passive: true });
+});
+</script>
+</body>
+</html>
